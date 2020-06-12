@@ -17,25 +17,21 @@ function getResult(a, b, c) {
 function getAverageMark(marks) {
     let averageMark = 0;
     let countMarks = marks.length;
+
     if (countMarks === 0) return averageMark;
     if (countMarks > 5) {
         alert('Количество оценок больше допустимого. Оставляем первые пять');
         marks = marks.slice(0, 5);
         countMarks = 5;
     }
-    averageMark = marks.reduce(function (averageMark, currentValue) {
-        return averageMark + currentValue;
-    }, averageMark) / countMarks;
 
-    return averageMark;
+    return marks.reduce((averageMark, currentValue) => averageMark + currentValue, averageMark) / countMarks;
 }
 
 function askDrink(name, dateOfBirthday) {
-    let currYear = new Date().getFullYear();
-    let personBirthYear = dateOfBirthday.getFullYear();
     let message = `Сожалею, ${name}, но я не могу вам продать алкоголь. Зато могу предложить вам замечательный клюквенный компот!`;
 
-    if (currYear - personBirthYear >= 18) message = `Не желаете ли олд-фэшн, ${name}?`;
+    if ((new Date().getFullYear() - dateOfBirthday.getFullYear()) >= 18) message = `Не желаете ли олд-фэшн, ${name}?`;
 
     return message;
 }
