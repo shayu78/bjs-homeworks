@@ -7,7 +7,7 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
         alert(`Параметр percent (процентная ставка) содержит неправильное значение (${percent})`);
         return totalAmount;
     }
-    percent /= 100;
+    const percentFraction = percent / 100;
 
     if (isNaN(contribution) || contribution < 0) {
         alert(`Параметр contribution (первоначальный взнос) содержит неправильное значение (${contribution})`);
@@ -28,38 +28,41 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
         alert(`Параметр date (дата окончания кредита) содержит неправильное значение (${date})`);
         return totalAmount;
     }
+
     if (date.getTime() <= Date.now()) {
         alert('Дата окончания выплаты кредита не должна быть ранее текущей даты');
         return totalAmount;
     }
 
-    let creditMonth = getCreditInMonths(date);
-    let monthPayment = (amount - contribution) * ((percent / 12) + (percent / 12) / (((1 + (percent / 12)) ** creditMonth) - 1));
+    const creditMonth = Math.floor((date - Date.now()) / 1000 / 3600 / 24 / 30) || 1;
+    const monthPayment = (amount - contribution) * ((percentFraction / 12) + (percentFraction / 12) / (((1 + (percentFraction / 12)) ** creditMonth) - 1));
     totalAmount = monthPayment * creditMonth;
 
     return Number.parseFloat(totalAmount.toFixed(2));
 }
 
-// считаем количество месяцев кредита (расчет не является абсолютно точным)
-function getCreditInMonths(date) {
-    let now = new Date();
-    let creditMonth = 0;
-    if (date.getFullYear() === now.getFullYear()) {
-        // срок кредита заканчивается в этом же году
-        creditMonth = date.getMonth() - now.getMonth();
-        if (creditMonth === 0) creditMonth++;       // кредит может быть выдан минимум на 1 месяц               
-    }
-    else if (date.getMonth() < now.getMonth())
-        creditMonth = (date.getFullYear() - now.getFullYear() - 1) * 12 + (12 - now.getMonth() + date.getMonth());
-    else creditMonth = (date.getFullYear() - now.getFullYear()) * 12 + (date.getMonth() - now.getMonth());
+// считаем количество месяцев кредита (расчет не является абсолютно точным, является сложным и неэффективным!!!)
+/*function getCreditInMonths(date) {
+        let creditMonth = 0;
 
-    return creditMonth;
-}
+        const now = new Date();
+        if (date.getFullYear() === now.getFullYear()) {
+            // срок кредита заканчивается в этом же году
+            creditMonth = date.getMonth() - now.getMonth();
+            if (creditMonth === 0) creditMonth++;       // кредит может быть выдан минимум на 1 месяц               
+        }
+        else if (date.getMonth() < now.getMonth())
+            creditMonth = (date.getFullYear() - now.getFullYear() - 1) * 12 + (12 - now.getMonth() + date.getMonth());
+        else creditMonth = (date.getFullYear() - now.getFullYear()) * 12 + (date.getMonth() - now.getMonth());
+    
+        return creditMonth;
+}*/
 
 function getGreeting(name) {
-    let greeting = 'Привет, мир! Меня зовут Аноним';
+    let totalName;
 
-    if (!(!name || String(name).trim().length === 0)) greeting = `Привет, мир! Меня зовут ${name}`;
-
+    if (name) totalName = String(name).trim();
+    const greeting = `Привет, мир! Меня зовут ${totalName || "Аноним"}`;
+    console.log(greeting);
     return greeting;
 }
