@@ -1,6 +1,8 @@
+"use strict";
+
 // Задача №1
 function getSolutions(a, b, c) {
-    let D = b ** 2 - 4 * a * c;
+    const D = b ** 2 - 4 * a * c;
 
     if (D < 0) {
         return {
@@ -24,7 +26,7 @@ function getSolutions(a, b, c) {
 }
 
 function showSolutionsMessage(a, b, c) {
-    let result = getSolutions(a, b, c);
+    const result = getSolutions(a, b, c);
     console.log(`Вычисляем корни квадратного уравнения ${a}x² + ${b}x + ${c}`);
     console.log(`Значение дискриминанта: ${result.D}`);
     if (result.roots.length === 1) console.log(`Уравнение имеет один корень X₁ = ${result.roots[0]}`);
@@ -38,26 +40,38 @@ showSolutionsMessage(2, 4, 2);
 
 // Задача №2
 function getAverageScore(data) {
-    let outData = {};
-    let accumulator = 0;
-    let countSubjects = 0;
+    const outData = {};
+    // let accumulator = 0;
+    // let countSubjects = 0;
     let subjectAverageMark;
+    const averageArray = [];
 
-    for (let prop in data) {
-        subjectAverageMark = getAverageMark(data[prop]);
-        outData[prop] = subjectAverageMark;
-        accumulator += subjectAverageMark;
-        countSubjects++;
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            subjectAverageMark = getAverageMark(data[key]);
+            outData[key] = subjectAverageMark;
+            averageArray.push(subjectAverageMark);
+        }
     }
-    if (countSubjects === 0) outData['average'] = accumulator;
-    else outData['average'] = accumulator / countSubjects;
+    outData['average'] = getAverageMark(averageArray);
+
+    /*    for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                subjectAverageMark = getAverageMark(data[key]);
+                outData[key] = subjectAverageMark;
+                accumulator += subjectAverageMark;
+                countSubjects++;
+            }
+        }
+        if (countSubjects === 0) outData['average'] = accumulator;
+        else outData['average'] = accumulator / countSubjects;*/
 
     return outData;
 }
 
 function getAverageMark(marks) {
     let averageMark = 0;
-    let countMarks = marks.length;
+    const countMarks = marks.length;
 
     if (countMarks === 0) return averageMark;
 
@@ -76,36 +90,51 @@ console.log(getAverageScore({
     french: [4, 4]
 }));
 
+// console.log(getAverageScore({
+//     algebra: [],
+//     geometry: [],
+//     russian: [],
+//     physics: [],
+//     music: [],
+//     english: [],
+//     poetry: [],
+//     chemistry: [],
+//     french: []
+// }));
+
 // Задача №3
 function getPersonData(secretData) {
-    let outData = {};
+    const outData = {};
     let outPropertyName = '';
 
-    for (let prop in secretData) {
-        if (prop === 'aaa') outPropertyName = 'firstName';
-        else if (prop === 'bbb') outPropertyName = 'lastName';
-        outData[outPropertyName] = getDecodedValue(secretData[prop]);
+    for (const key in secretData) {
+        if (secretData.hasOwnProperty(key)) {
+            if (key === 'aaa') outPropertyName = 'firstName';
+            else if (key === 'bbb') outPropertyName = 'lastName';
+            outData[outPropertyName] = getDecodedValue(secretData[key]);
+        }
     }
 
     return outData;
 }
 
 function getDecodedValue(secret) {
-    let name;
-
-    switch (secret) {
-        case 0: {
-            name = 'Родриго';
-            break;
+    /*    let name;
+    
+        switch (secret) {
+            case 0: {
+                name = 'Родриго';
+                break;
+            }
+            case 1: {
+                name = 'Эмильо';
+                break;
+            }
+            default: name = '';
         }
-        case 1: {
-            name = 'Эмильо';
-            break;
-        }
-        default: name = '';
-    }
-
-    return name;
+    
+        return name;*/
+    return secret ? 'Эмильо' : 'Родриго';
 }
 
 console.log(getPersonData({
