@@ -41,30 +41,11 @@ showSolutionsMessage(2, 4, 2);
 // Задача №2
 function getAverageScore(data) {
     const outData = {};
-    // let accumulator = 0;
-    // let countSubjects = 0;
-    let subjectAverageMark;
-    const averageArray = [];
 
     for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-            subjectAverageMark = getAverageMark(data[key]);
-            outData[key] = subjectAverageMark;
-            averageArray.push(subjectAverageMark);
-        }
+        if (data.hasOwnProperty(key)) outData[key] = getAverageMark(data[key]);
     }
-    outData['average'] = getAverageMark(averageArray);
-
-    /*    for (let key in data) {
-            if (data.hasOwnProperty(key)) {
-                subjectAverageMark = getAverageMark(data[key]);
-                outData[key] = subjectAverageMark;
-                accumulator += subjectAverageMark;
-                countSubjects++;
-            }
-        }
-        if (countSubjects === 0) outData['average'] = accumulator;
-        else outData['average'] = accumulator / countSubjects;*/
+    outData['average'] = getAverageMark(Object.values(outData));
 
     return outData;
 }
@@ -90,18 +71,6 @@ console.log(getAverageScore({
     french: [4, 4]
 }));
 
-// console.log(getAverageScore({
-//     algebra: [],
-//     geometry: [],
-//     russian: [],
-//     physics: [],
-//     music: [],
-//     english: [],
-//     poetry: [],
-//     chemistry: [],
-//     french: []
-// }));
-
 // Задача №3
 function getPersonData(secretData) {
     const outData = {};
@@ -119,21 +88,6 @@ function getPersonData(secretData) {
 }
 
 function getDecodedValue(secret) {
-    /*    let name;
-    
-        switch (secret) {
-            case 0: {
-                name = 'Родриго';
-                break;
-            }
-            case 1: {
-                name = 'Эмильо';
-                break;
-            }
-            default: name = '';
-        }
-    
-        return name;*/
     return secret ? 'Эмильо' : 'Родриго';
 }
 
