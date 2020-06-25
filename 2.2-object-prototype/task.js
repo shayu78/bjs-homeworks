@@ -1,36 +1,50 @@
+"use strict";
+
+// Задача 1
 String.prototype.isPalindrome = function () {
     const str = this.toUpperCase().replace(/[^A-ZА-Я0-9]/g, '');    // удаляем из строки все символы кроме букв и цифр
     const str_reverse = str.split('').reverse().join('');   // меняем порядок
     return str === str_reverse;
 };
 
+// Задача 2
 function getAverageMark(marks) {
     let averageMark = 0;
     const countMarks = marks.length;
 
     if (countMarks === 0) return averageMark;
 
-    const roundedAverage = Math.round(marks.reduce((averageMark, currentValue) => averageMark + currentValue, averageMark) / countMarks);
-    return roundedAverage;
+    averageMark = marks.reduce((averageMark, currentValue) => averageMark + currentValue, averageMark) / countMarks;
+    return Math.round(averageMark);
 }
 
+// Задача 3
 function checkBirthday(birthday) {
-    const birth = new Date(birthday).getTime();
+    // const birth = new Date(birthday).getTime();
+    const birthDate = new Date(birthday);
 
-    if (isNaN(birth)) {
-        alert(`Параметр birthday (дата рождения) содержит неправильное значение (${birthday})`);
+    // if (isNaN(birth) {
+    if (isNaN(birthDate.getTime())) {
+        alert('Некорректная дата дня рождения');
         return false;
     }
 
-    const now = Date.now();
+    // const now = Date.now();
+    const nowDate = new Date();
 
-    if (birth > now) {
-        alert('День рождения в будущем, странно!!!');
+    // if (birth > now) {
+    if (birthDate > nowDate) {
+        alert('День рождения в будущем');
         return false;
     }
+
+    return ((nowDate.getFullYear() - birthDate.getFullYear()) >= 18 
+            && nowDate.getMonth() >= birthDate.getMonth() 
+            && nowDate.getDate() >= birthDate.getDate());
 
     // const diff = now - birth;
-    return Math.floor((now - birth) / (1000 * 3600 * 24 * 365.25)) >= 18;
+    // 365 и 1⁄4 дня = 365,25 дня (точно) — юлианский год, средняя продолжительность года в юлианском календаре; равен точно 31 557 600 секунд СИ
+    // return Math.floor((now - birth) / 31557600000) >= 18;
 }
 
 /*function isLeapYear(year) {
