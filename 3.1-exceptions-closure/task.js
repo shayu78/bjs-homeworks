@@ -19,13 +19,11 @@ function validateCount(value) {
 
 // Задача 2
 class Triangle {
-    constructor(side_a, side_b, side_c) {
-        this.a = side_a;
-        this.b = side_b;
-        this.c = side_c;
-        if (((this.a + this.b) <= this.c) ||
-            ((this.b + this.c) <= this.a) ||
-            ((this.c + this.a) <= this.b)) {
+    constructor(a, b, c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+        if (((a + b) <= c) || ((b + c) <= a) || ((c + a) <= b)) {
             throw new Error('Треугольник с такими сторонами не существует');
         }
     }
