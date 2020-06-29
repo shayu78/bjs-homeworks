@@ -6,9 +6,8 @@ function sleep(milliseconds) {
 }
 
 function sum(...args) {
-    const array = Array.from(args);
     // sleep(1);
-    return array.reduce((sum, arg) => {
+    return args.reduce((sum, arg) => {
         return sum += +arg;
     }, 0);
 }
@@ -37,18 +36,16 @@ function memorize(fn, limit) {
     const memory = [];
 
     return function (...args) {
-        const argsArray = Array.from(arguments);
-        const found = memory.find(element => compareArrays(element.args, argsArray));
+        const found = memory.find(element => compareArrays(element.args, args));
         if (found) {
             // console.log(`Результат функции ${fn} берётся из памяти`);
             return found.result;
         }
         else {
             // console.log(`Функция ${fn} вызвана не из памяти`);
-            // const result = fn.apply(null, arguments);
             const result = fn(...args);
             const operationInfo = {};
-            operationInfo.args = argsArray;
+            operationInfo.args = args;
             operationInfo.result = result;
             memory.push(operationInfo);
             if (memory.length > limit) {
