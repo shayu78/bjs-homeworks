@@ -50,22 +50,26 @@ class AlarmClock {
     }
 }
 
-const alarm = new AlarmClock();
-try {
-    // alarm.addClock("02:02", () => console.log('Пора вставать 4'));
-    alarm.addClock(alarm.getCurrentFormattedTime(), () => console.log('Пора вставать'), 2);
-    alarm.addClock("12:49", () => {
-        console.log('Пора вставать 2');
-        alarm.removeClock(1);
-    }, 1);
-    alarm.addClock("12:50", () => {
-        console.log('Пора вставать 3');
-        alarm.stop();
-        alarm.clearAlarms();
+function testCase() {
+    const alarm = new AlarmClock();
+    try {
+        // alarm.addClock("02:02", () => console.log('Пора вставать 4'));
+        alarm.addClock(alarm.getCurrentFormattedTime(), () => console.log('Пора вставать'), 2);
+        alarm.addClock("12:57", () => {
+            console.log('Пора вставать 2');
+            alarm.removeClock(1);
+        }, 1);
+        alarm.addClock("12:58", () => {
+            console.log('Пора вставать 3');
+            alarm.stop();
+            alarm.clearAlarms();
+            alarm.printAlarms();
+        }, 4);
         alarm.printAlarms();
-    }, 4);
-    alarm.printAlarms();
-    alarm.start();
-} catch (error) {
-    console.error(error);
+        alarm.start();
+    } catch (error) {
+        console.error(error);
+    }
 }
+
+testCase();
